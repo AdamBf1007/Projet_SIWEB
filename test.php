@@ -117,42 +117,96 @@ imageSeries.heatRules.push({
 });
 
 // Pin data
-imageSeries.data = [{
-  "latitude": 40,
-  "longitude": -101,
-  "value": 12,
-  "title": "United\nStates",
-  "length": 150
-}, {
-  "latitude": 0,
-  "longitude": 25,
-  "value": 5,
-  "title": "Africa",
-  "length": 40
-}, {
-  "latitude": 43,
-  "longitude": 5,
-  "value": 15,
-  "title": "European\nUnion",
-  "length": 100
-}, {
-  "latitude": 40,
-  "longitude": 95,
-  "value": 8,
-  "title": "Asia",
-  "length": 80
-},{
-  "latitude": 156,
-  "longitude": 95,
-  "value": 8, // pourcentage 
-  "title": "Test", // 
-  "length": 80
-}];
+// imageSeries.data = [{
+//   "latitude": 40,
+//   "longitude": -101,
+//   "value": 12,
+//   "title": "United\nStates",
+//   "length": 150
+// }, {
+//   "latitude": 0,
+//   "longitude": 25,
+//   "value": 5,
+//   "title": "Africa",
+//   "length": 40
+// }, {
+//   "latitude": 43,
+//   "longitude": 5,
+//   "value": 15,
+//   "title": "European\nUnion",
+//   "length": 100
+// }, {
+//   "latitude": 40,
+//   "longitude": 95,
+//   "value": 8,
+//   "title": "Asia",
+//   "length": 80
+// },{
+//   "latitude": 156,
+//   "longitude": 95,
+//   "value": 8, // pourcentage 
+//   "title": "Test", // 
+//   "length": 80
+// }];
 
 }); // end am4core.ready()
+
+function myFunction() {
+  //document.getElementById("a_afficher").innerHTML = "Hello World";
+    imageSeries.data = [{
+    "latitude": 40,
+    "longitude": -101,
+    "value": 12,
+    "title": "United\nStates",
+    "length": 150
+  }, {
+    "latitude": 0,
+    "longitude": 25,
+    "value": 5,
+    "title": "Africa",
+    "length": 40
+  }, {
+    "latitude": 43,
+    "longitude": 5,
+    "value": 15,
+    "title": "European\nUnion",
+    "length": 100
+  }, {
+    "latitude": 40,
+    "longitude": 95,
+    "value": 8,
+    "title": "Asia",
+    "length": 80
+  },{
+    "latitude": 156,
+    "longitude": 95,
+    "value": 8, // pourcentage 
+    "title": "Test", // 
+    "length": 80
+  }];
+}
 </script>
 
+<style>
+.btn-group button {
+  background-color: #67b7dc; /* Green background */
+  border: 1px solid rgb(53, 55, 78); /* Green border */
+  color: white; /* White text */
+  padding: 10px 24px; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  width: 50%; /* Set a width if needed */
+  display: block; /* Make the buttons appear below each other */
+}
 
+.btn-group button:not(:last-child) {
+  border-bottom: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+  background-color: #6080af;
+}
+</style>
 <body>
 <div id="chartdiv"></div>
 
@@ -217,31 +271,35 @@ $languages = [];
 
 
 foreach($queryResult["results"]["bindings"] as $line){
-	$countryName = $line["countryLabel"]["value"];
-	$countryLang = $line["languageLabel"]["value"];
-	$countryCoords= $line["coords"]["value"];
-	if(!in_array($countryName,$country)){
-		$country[] =$countryName; 
-	}
-	
-	if(!in_array($countryLang,$languages)){
-		$languages[] =$countryLang; 
+  $countryName = $line["countryLabel"]["value"];
+  $countryLang = $line["languageLabel"]["value"];
+  $countryCoords= $line["coords"]["value"];
+  if(!in_array($countryName,$country)){
+      $country[] =$countryName; 
+  }
 
-	}
-    $languages[$countryLang][]=$countryName; 
 
-	$country[$countryName]["languages"][] =$countryLang;
-	$country[$countryName]["coord"] = $countryCoords;
+  $languages[$countryLang][]=$countryName; 
 
-	
-	
+  $country[$countryName]["languages"][] =$countryLang;
+  $country[$countryName]["coord"] = $countryCoords;
+
+
+
 }
+echo "<div class=\"btn-group\">";
+foreach($languages as $lang => $val){
+  echo "<button onclick=\"myFunction()\"> $lang </button>";
+}
+echo "</div>";
 
-var_dump($languages);
+
+
 
 
 ?>
 </body>
+<p id="a_afficher"></p>
 </html>
 
 
